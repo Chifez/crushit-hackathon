@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const notificationContainer = document.querySelector(
     '.user_notification_container'
   );
+  const body = document.querySelector('#container');
 
   //Buttons
   const toggleListButton = document.getElementById('toggle-setup-list');
@@ -58,6 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
     menuContainer.classList.toggle('hidden');
   }
 
+  function closeMenu() {
+    menuContainer.classList.add('hidden');
+    notificationContainer.classList.add('hidden');
+  }
+
   //close banner function
   function closeSelectbanner() {
     document.querySelector('.main_container').removeChild(selectPlan);
@@ -82,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!isChecked) {
       completedItems++;
+
       activeSpan.classList.remove('active');
       activeSpan.classList.add('hidden');
 
@@ -106,12 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 1500);
     }
 
-    const totalItems = accordionItems.length;
-    const progressValue = (completedItems / totalItems) * 100;
-    progressText.textContent = `${completedItems} / ${totalItems} completed`;
-    progressBar.value = progressValue;
-
-    box.setAttribute('aria-checked', !isChecked);
+    setTimeout(function () {
+      const totalItems = accordionItems.length;
+      const progressValue = (completedItems / totalItems) * 100;
+      progressText.textContent = `${completedItems} / ${totalItems} completed`;
+      progressBar.value = progressValue;
+      box.setAttribute('aria-checked', !isChecked);
+    }, 1500);
   }
 
   //eventlisteners functions
@@ -119,6 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
   closeSelectBannerButton.addEventListener('click', closeSelectbanner);
   notificationButton.addEventListener('click', toggleNotification);
   userButton.addEventListener('click', toggleUserMenu);
+
+  body.addEventListener('click', closeMenu);
 
   accordionItems.forEach((item) => {
     const checkbox = item.querySelector('button[role="checkbox"]');
